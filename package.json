@@ -1,0 +1,24 @@
+{
+  "name": "TPM3U4_ExpressBD",
+  "version": "1.0.0",
+  "description": "Servidor con Express y MySQL\r Recibe un formulario, se verifica, se almacena en una BD mysql. Y un metodo que devuelve la tabla completa.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PIgnacioFranco/TPM3U4_ExpressBD.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PIgnacioFranco/TPM3U4_ExpressBD/issues"
+  },
+  "homepage": "https://github.com/PIgnacioFranco/TPM3U4_ExpressBD#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mysql": "^2.18.1"
+  }
+}
