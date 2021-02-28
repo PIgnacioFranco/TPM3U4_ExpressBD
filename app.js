@@ -28,15 +28,22 @@ const qy = util.promisify(conexion.query).bind(conexion);
 
 /**
  * Base de datos. Deposito de materiales:
- * Tabla: insumo, ingreso y egreso
- * insumo: se agrega insumos a depositar
- * ingreso: se ingresa la cantidad a depositar
- * egreso: se indica la cantidad a retirar
+ * Tabla: material y deposito
+ * material: elementos a depositar
+ * deposito: cantidad a depositar
  */
 
  /**
-  * PUT
+  * Descpción tabla material:
+  * id: id del material
+  * Nombre: nombre del material (obligatorio)
+  * Descripcion: descripcion del insumo
   */
+
+
+
+
+
 // Servidor 
 app.listen (puerto, () => {
     console.log('Servidor funcionando por puerto 3000!');
