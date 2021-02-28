@@ -12,16 +12,31 @@ const conexion = mysql.createConnection ({
     host: localhost,
     user: 'root',
     password: '',
-    database: ''
+    database: 'depositomateriales'
     // completar
 });
 
-conexion.connect();
+conexion.connect( () => {
+    if (error) {
+        throw error;
+    }
+    console.log ('Conexión a la BD establecida!');
+});
 
-// Para trabajar con async-await
-const qy = ;
+// Para pasar de callback a async-await
+const qy = util.promisify(conexion.query).bind(conexion);
 
+/**
+ * Base de datos. Deposito de materiales:
+ * Tabla: insumo, ingreso y egreso
+ * insumo: se agrega insumos a depositar
+ * ingreso: se ingresa la cantidad a depositar
+ * egreso: se indica la cantidad a retirar
+ */
 
+ /**
+  * PUT
+  */
 // Servidor 
 app.listen (puerto, () => {
     console.log('Servidor funcionando por puerto 3000!');
