@@ -9,11 +9,18 @@
 </head>
 <body>
     <div class="recuadro">
-        < action="" method="POST">
-            <label for="nombre">Nombre del material</label>
-            <input type="text" name="nombre" id="nombre">
-            <label for="descripcion">Descripción del material</label>
-            <textarea name="descripcion" id="" cols="30" rows="10"></textarea>
+        <fieldset>
+        <legend><h2>Registro de alumno</h2></legend>
+        <form action="/alumnos" method="POST">
+            <label for="nombre">Nombre:</label><br>
+            <input type="text" name="nombre"><br>
+            <label for="apellido">Apellido:</label><br>
+            <input type="text" name="apellido"><br>
+            <label for="dni">DNI:</label><br>
+            <input type="text" name="dni" size="8"><br>
+            <button type="submit">Ingresar</button><br> 
+        </form>
+        </fieldset>
     </div>
 </body>
 </html>

@@ -6,18 +6,19 @@ const util = require ('util');
 const app = express ();
 const puerto = 3000;
 
+app.use (express.urlencoded());
 app.use (express.json()); // mapeo de json a obj js
+app.use (express.static('static'));
 
 const conexion = mysql.createConnection ({
-    host: localhost,
+    host: 'localhost',
     user: 'root',
     password: '',
-    database: 'depositomateriales'
-    // completar
+    database: 'registro'
 });
 
-conexion.connect( () => {
-    if (error) {
+conexion.connect( (error) => {
+     if (error) {
         throw error;
     }
     console.log ('Conexión a la BD establecida!');
@@ -27,22 +28,60 @@ conexion.connect( () => {
 const qy = util.promisify(conexion.query).bind(conexion);
 
 /**
- * Base de datos. Deposito de materiales:
- * Tabla: material y deposito
- * material: elementos a depositar
- * deposito: cantidad a depositar
+ * Base de datos. Registro de alumnos:
+ * Tabla: alumnos
  */
 
  /**
-  * Descpción tabla material:
-  * id: id del material
-  * Nombre: nombre del material (obligatorio)
-  * Descripcion: descripcion del insumo
+  * Descpción tabla alumnos:
+  * id: id del alumno, int,  autoincremental
+  * Nombre: nombre del alumno, varchar 50  (obligatorio)
+  * Apellido: apellido del alumno, varchar 50 (obligatorio)
+  * dni: dni del alumno, int 8 (obligatorio) 
   */
 
+// get devuelve la lista de alumnos
+app.get ('/alumnos', async (req, res) => {
+    try {
+        let query = 'SELECT * FROM alumnos';
+        let respuesta = await qy (query); 
+        res.send ({"respuesta":respuesta});
+    }
+    catch (error) {
+        console.log(error.message);
+        res.status(413).send ({"error":error.message});
+    }
+});
 
+// post ingresa un alumno
+app.post ('/alumnos', async (req, res) => {
+    try {
+        // verifico que se envio un nombre, apellido y dni
+        if (!req.body.nombre || !req.body.apellido || !req.body.dni) {
+            console.log(req.body.nombre, req.body.apellido, req.body.dni);
+            throw new Error ('Faltaron datos');
+        }
 
+        // verifico que ya exista algun dato 
+        let query = 'SELECT * FROM alumnos WHERE nombre = ? OR apellido = ? OR dni = ?';
+        let respuesta = await qy (query, [req.body.nombre, req.body.apellido, req.body.dni]);
 
+        if (respuesta.length > 0)
+            throw new Error ('Ya existe algun dato ingresado');
+        
+        // se termino la verificación
+        // ingreso alumno
+
+        query = 'INSERT INTO alumnos (nombre, apellido, dni) VALUE (?,?,?)';
+        respuesta = await qy (query, [req.body.nombre, req.body.apellido, req.body.dni]);
+        console.log(respuesta);
+        res.send ({"respuesta": respuesta});
+    }
+    catch (error) {
+        console.log(error.message);
+        res.status(413).send ({"error":error.message});
+    }
+})
 
 // Servidor 
 app.listen (puerto, () => {
